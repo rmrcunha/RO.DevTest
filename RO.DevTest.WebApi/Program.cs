@@ -1,4 +1,5 @@
 using RO.DevTest.Application;
+using RO.DevTest.Application.Contracts.Persistance.Repositories;
 using RO.DevTest.Infrastructure.IoC;
 using RO.DevTest.Persistence.IoC;
 
@@ -11,9 +12,8 @@ public class Program {
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddScoped<IProductsRepository, IProductsRepository>();
 
-        builder.Services.InjectPersistenceDependencies()
-            .InjectInfrastructureDependencies();
 
         // Add Mediatr to program
         builder.Services.AddMediatR(cfg =>
