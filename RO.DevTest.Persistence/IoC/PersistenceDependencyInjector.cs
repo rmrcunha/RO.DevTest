@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using RO.DevTest.Application.Contracts.Infrastructure;
+using RO.DevTest.Application.Contracts.Persistance.Repositories;
+using RO.DevTest.Persistence.Repositories;
+
 
 namespace RO.DevTest.Persistence.IoC;
 
@@ -16,6 +20,10 @@ public static class PersistenceDependencyInjector {
     /// </returns>
     public static IServiceCollection InjectPersistenceDependencies(this IServiceCollection services) {
         services.AddDbContext<DefaultContext>(options => options.UseInMemoryDatabase("rota"));
+
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IProductsRepository, ProductRepository>();
 
         return services;
     }

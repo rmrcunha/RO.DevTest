@@ -12,7 +12,6 @@ public class Program {
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddScoped<IProductsRepository, IProductsRepository>();
 
 
         // Add Mediatr to program
