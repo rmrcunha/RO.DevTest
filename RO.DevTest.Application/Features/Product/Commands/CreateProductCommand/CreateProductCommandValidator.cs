@@ -15,6 +15,13 @@ public class CreateProductCommandValidator:AbstractValidator<CreateProductComman
         .NotEmpty()
         .WithMessage("O campo nome precisa ser preenchido");
 
+        RuleFor(cpau => cpau.Price)
+            .NotNull()
+            .NotEmpty()
+            .WithMessage("O campo preço precisa ser preenchido")
+            .GreaterThan(0)
+            .WithMessage("O campo preço precisa ser maior que 0");
+
         RuleFor(cpau => cpau.Description)
             .NotNull()
             .NotEmpty()

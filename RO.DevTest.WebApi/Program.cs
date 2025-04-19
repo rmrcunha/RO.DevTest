@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using RO.DevTest.Application;
 using RO.DevTest.Application.Contracts.Persistance.Repositories;
+using RO.DevTest.Domain.Entities;
 using RO.DevTest.Infrastructure.IoC;
+using RO.DevTest.Persistence;
 using RO.DevTest.Persistence.IoC;
 
 namespace RO.DevTest.WebApi;
@@ -13,6 +16,10 @@ public class Program {
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<DefaultContext>()
+            .AddDefaultTokenProviders();
+
 
         // Add Mediatr to program
         builder.Services.AddMediatR(cfg =>
@@ -22,6 +29,9 @@ public class Program {
                 typeof(Program).Assembly
             );
         });
+
+        builder.Services.AddInfrastructureDependencies();
+        builder.Services.AddPersistenceDependencies(builder.Configuration);
 
         var app = builder.Build();
 

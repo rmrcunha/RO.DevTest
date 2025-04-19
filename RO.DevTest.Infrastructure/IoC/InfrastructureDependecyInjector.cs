@@ -4,6 +4,7 @@ using RO.DevTest.Application.Contracts.Infrastructure;
 using RO.DevTest.Domain.Entities;
 using RO.DevTest.Infrastructure.Abstractions;
 using RO.DevTest.Persistence;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RO.DevTest.Infrastructure.IoC;
 
@@ -24,8 +25,12 @@ public static class InfrastructureDependecyInjector {
             .AddEntityFrameworkStores<DefaultContext>()
             .AddDefaultTokenProviders();
 
-        services.AddScoped<IIdentityAbstractor, IdentityAbstractor>();
+        return services;
+    }
 
+    public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
+    {
+        services.AddScoped<IIdentityAbstractor, IdentityAbstractor>();
         return services;
     }
 }

@@ -10,6 +10,7 @@ public record CreateProductResult
 {
     public string ProductId { get; set; } = string.Empty;
     public string ProductName { get; set; } = string.Empty;
+    public double ProductPrice { get; set; } = 0.0;
     public string ProductDescription { get; set; } = string.Empty;
 
     public CreateProductResult() { }
@@ -18,6 +19,7 @@ public record CreateProductResult
     {
         ProductId = product.Id;
         ProductName = product.Name;
+        ProductPrice = product.Price;
         ProductDescription = product.Description;
     }
 }
