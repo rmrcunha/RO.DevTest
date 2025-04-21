@@ -23,6 +23,8 @@ public interface IBaseRepository<T> where T : class {
     /// The <typeparamref name="T"/> entity, if found. Null otherwise. </returns>
     T? Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes);
 
+    IQueryable<T> Query();
+
     /// <summary>
     /// Updates an entity entry on the database
     /// </summary>

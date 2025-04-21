@@ -25,6 +25,8 @@ public class BaseRepository<T>(DefaultContext defaultContext) : IBaseRepository<
         await Context.SaveChangesAsync();
     }
 
+    public IQueryable<T> Query() => Context.Set<T>().AsQueryable();
+
     public T? Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
     => GetQueryWithIncludes(predicate, includes).FirstOrDefault();
 

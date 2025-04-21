@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using RO.DevTest.Application;
 using RO.DevTest.Application.Contracts.Persistance.Repositories;
 using RO.DevTest.Domain.Entities;
@@ -32,6 +33,10 @@ public class Program {
 
         builder.Services.AddInfrastructureDependencies();
         builder.Services.AddPersistenceDependencies(builder.Configuration);
+
+        builder.Services.AddDbContext<DefaultContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
         var app = builder.Build();
 
