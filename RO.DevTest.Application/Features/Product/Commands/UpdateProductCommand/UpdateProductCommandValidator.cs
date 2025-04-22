@@ -5,34 +5,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RO.DevTest.Application.Features.Product.Commands.CreateProductCommand;
-public class CreateProductCommandValidator:AbstractValidator<CreateProductCommand>
-{
-    public CreateProductCommandValidator()
-    {
-        RuleFor(cpau => cpau.Name)
-        .NotNull()
-        .NotEmpty()
-        .WithMessage("O campo nome precisa ser preenchido");
+namespace RO.DevTest.Application.Features.Product.Commands.UpdateProductCommand;
 
-        RuleFor(cpau => cpau.Price)
+public class UpdateProductCommandValidator:AbstractValidator<UpdateProductCommand>
+{
+    public UpdateProductCommandValidator()
+    {
+        RuleFor(up => up.Name)
+            .NotNull()
+            .NotEmpty()
+            .WithMessage("O campo nome precisa ser preenchido");
+        RuleFor(up => up.Price)
             .NotNull()
             .NotEmpty()
             .WithMessage("O campo preço precisa ser preenchido")
             .GreaterThan(0)
             .WithMessage("O campo preço precisa ser maior que 0");
-
-        RuleFor(cpau => cpau.Quantity)
+        RuleFor(up => up.Quantity)
             .NotNull()
             .NotEmpty()
             .WithMessage("O campo quantidade precisa ser preenchido")
             .GreaterThan(0)
             .WithMessage("O campo quantidade precisa ser maior que 0");
-
-        RuleFor(cpau => cpau.Description)
+        RuleFor(up => up.Description)
             .NotNull()
             .NotEmpty()
             .WithMessage("O campo descrição precisa ser preenchido");
     }
-
 }
