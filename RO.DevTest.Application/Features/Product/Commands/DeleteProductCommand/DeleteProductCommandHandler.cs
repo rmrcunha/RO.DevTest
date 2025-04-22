@@ -9,7 +9,7 @@ using RO.DevTest.Domain.Exception;
 
 namespace RO.DevTest.Application.Features.Product.Commands.DeleteProductCommand;
 
-public class DeleteProductCommandHandler(IProductsRepository productsRepository) : IRequestHandler<DeleteProductCommand>
+public class DeleteProductCommandHandler(IProductsRepository productsRepository) : IRequestHandler<DeleteProductCommand, Unit>
 {
     public async Task<Unit> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
