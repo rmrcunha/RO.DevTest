@@ -15,4 +15,8 @@
     <ProjectReference Include="..\RO.DevTest.Domain\RO.DevTest.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\User\Queries\" />
+  </ItemGroup>
+
 </Project>

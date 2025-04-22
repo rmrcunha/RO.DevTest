@@ -33,4 +33,5 @@ public class CreateUserCommandHandler(IIdentityAbstractor identityAbstractor) : 
 
         return new CreateUserResult(newUser);
     }
+
 }

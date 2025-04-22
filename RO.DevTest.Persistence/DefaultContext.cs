@@ -6,9 +6,13 @@ namespace RO.DevTest.Persistence;
 
 public class DefaultContext : IdentityDbContext<User> {
 
+    public DbSet<Product> Products { get; set; }
+
     public DefaultContext() { }
 
     public DefaultContext(DbContextOptions<DefaultContext> options) : base(options) { }
+
+    
 
     protected override void OnModelCreating(ModelBuilder builder) {
         builder.HasPostgresExtension("uuid-ossp");

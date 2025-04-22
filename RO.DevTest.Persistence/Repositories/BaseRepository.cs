@@ -20,13 +20,32 @@ public class BaseRepository<T>(DefaultContext defaultContext) : IBaseRepository<
         await Context.SaveChangesAsync();
     }
 
+    public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
+    {
+        Context.Set<T>().Update(entity);
+        await Context.SaveChangesAsync(cancellationToken);
+    }
+
     public async void Delete(T entity) {
         Context.Set<T>().Remove(entity);
         await Context.SaveChangesAsync();
     }
 
+    public async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
+    {
+        Context.Set<T>().Remove(entity);
+        await Context.SaveChangesAsync(cancellationToken);
+    }
+
+    public IQueryable<T> Query() => Context.Set<T>().AsQueryable();
+
     public T? Get(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
     => GetQueryWithIncludes(predicate, includes).FirstOrDefault();
+
+    public async Task<T?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+    {
+        return await Context.Set<T>().FindAsync(new object[] { id }, cancellationToken);
+    }
 
     /// <summary>
     /// Generates a filtered <see cref="IQueryable{T}"/>, based on its
@@ -75,5 +94,4 @@ public class BaseRepository<T>(DefaultContext defaultContext) : IBaseRepository<
 
         return baseQuery;
     }
-
 }
