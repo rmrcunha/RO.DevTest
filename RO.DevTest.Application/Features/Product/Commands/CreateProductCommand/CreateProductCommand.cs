@@ -7,8 +7,8 @@ public record CreateProductCommand : IRequest<CreateProductResult>{
     public double Price { get; set; } = 0.0;
     public int Quantity { get; set; } = 0;
     public string Description { get; set; } = string.Empty;
-    public string CreatedAt { get; set; } = DateTime.UtcNow.ToString();
-    public string UpdatedAt { get; set; } = DateTime.UtcNow.ToString();
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
 
     public Domain.Entities.Product AssignTo()

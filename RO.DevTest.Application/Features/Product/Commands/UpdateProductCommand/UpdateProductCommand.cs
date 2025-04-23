@@ -14,7 +14,7 @@ public class UpdateProductCommand : IRequest<UpdateProductResult>
     public string Description { get; set; } = string.Empty;
     public double Price { get; set; }
     public int Quantity { get; set; }
-    public string UpdatedAt { get; set; } = DateTime.UtcNow.ToString();
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     public Domain.Entities.Product AssignTo()
     {

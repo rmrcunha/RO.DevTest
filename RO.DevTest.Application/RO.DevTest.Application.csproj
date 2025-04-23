@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Product\Commands\NovaPasta1\**" />
+    <Compile Remove="Features\Product\Commands\NovaPasta\**" />
+    <EmbeddedResource Remove="Features\Product\Commands\NovaPasta1\**" />
+    <EmbeddedResource Remove="Features\Product\Commands\NovaPasta\**" />
+    <None Remove="Features\Product\Commands\NovaPasta1\**" />
+    <None Remove="Features\Product\Commands\NovaPasta\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="MediatR" Version="12.5.0" />
   </ItemGroup>
