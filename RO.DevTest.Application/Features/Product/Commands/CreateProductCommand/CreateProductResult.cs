@@ -13,8 +13,8 @@ public record CreateProductResult
     public double ProductPrice { get; set; } = 0.0;
     public int ProductQuantity { get; set; } = 0;
     public string ProductDescription { get; set; } = string.Empty;
-    public string CreatedAt { get; set; } = DateTime.UtcNow.ToString();
-    public string UpdatedAt { get; set; } = DateTime.UtcNow.ToString();
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     public CreateProductResult() { }
 

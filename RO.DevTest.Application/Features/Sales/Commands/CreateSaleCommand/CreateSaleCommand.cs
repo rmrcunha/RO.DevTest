@@ -20,7 +20,7 @@ public record CreateSaleCommand:IRequest<CreateSaleResult>
             ProductId = ProductId,
             Quantity = Quantity,
             TotalPrice = TotalPrice,
-            CreatedAt = CreatedAt,
+            CreatedAt = CreatedAt.ToUniversalTime(),
         };
     }
 }

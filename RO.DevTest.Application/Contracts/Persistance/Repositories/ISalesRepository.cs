@@ -11,5 +11,4 @@ public interface ISalesRepository:IBaseRepository<Sale>
 {
     Task<IEnumerable<Sale>> GetSalesByProductIdAsync(int productId);
     Task<IEnumerable<Sale>> GetSalesByCustomerIdAsync(int customerId);
-    Task<IEnumerable<Sale>> GetSalesByDateRangeAsync(DateTime startDate, DateTime endDate);
 }

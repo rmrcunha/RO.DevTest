@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RO.DevTest.Application.Features.Sales.Commands.CreateSaleCommand;
+using RO.DevTest.Application.Features.Sales.Queries.GetSaleByIdQuery;
+using RO.DevTest.Application.Features.Sales.Queries.GetSalesByPeriodQuery;
 
 namespace RO.DevTest.WebApi.Controllers;
 [ApiController]
@@ -19,5 +21,24 @@ public class SalesController(IMediator mediator):Controller
     {
         CreateSaleResult response = await _mediator.Send(sale);
         return Created(HttpContext.Request.GetDisplayUrl(), response);
+    }
+
+    [HttpGet("analytics")]
+    [ProducesResponseType(typeof(GetSalesByPeriodResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetSalesByPeriodResult), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetSalesByPeriod([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+    {
+        var result = await _mediator.Send(new GetSalesByPeriodQuery(startDate,endDate));
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(GetSaleByIdResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetSaleByIdResult), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetSaleById([FromRoute] string id)
+    {
+        var result = await _mediator.Send(new GetSaleByIdQuery(id));
+        if (result == null) return NotFound($"Sale with ID {id} not found");
+        return Ok(result);
     }
 }

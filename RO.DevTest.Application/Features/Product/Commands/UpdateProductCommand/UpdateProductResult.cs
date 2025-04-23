@@ -14,7 +14,7 @@ public class UpdateProductResult
     public double ProductPrice { get; set; } = 0.0;
     public int ProductQuantity { get; set; } = 0;
     public string ProductDescription { get; set; } = string.Empty;
-    public string UpdatedAt { get; set; } = DateTime.UtcNow.ToString();
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public UpdateProductResult() { }
     public UpdateProductResult(Domain.Entities.Product product)
     {

@@ -15,11 +15,6 @@ public class SalesRepository(DefaultContext context) : BaseRepository<Sale>(cont
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Sale>> GetSalesByDateRangeAsync(DateTime startDate, DateTime endDate)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task<IEnumerable<Sale>> GetSalesByProductIdAsync(int productId)
     {
         throw new NotImplementedException();
