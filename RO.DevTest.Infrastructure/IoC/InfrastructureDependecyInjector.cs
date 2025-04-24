@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RO.DevTest.Application.Contracts.Infrastructure;
 using RO.DevTest.Domain.Entities;
 using RO.DevTest.Infrastructure.Abstractions;
+using RO.DevTest.Infrastructure.Authentication;
 using RO.DevTest.Persistence;
 using System.Security.Cryptography.X509Certificates;
 
@@ -31,6 +32,8 @@ public static class InfrastructureDependecyInjector {
     public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
     {
         services.AddScoped<IIdentityAbstractor, IdentityAbstractor>();
+        services.AddScoped<IJwtService, JwtService>();
+
         return services;
     }
 }

@@ -18,14 +18,11 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.31.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RO.DevTest.Domain\RO.DevTest.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\User\Queries\" />
   </ItemGroup>
 
 </Project>
