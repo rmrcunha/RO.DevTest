@@ -5,20 +5,9 @@ Teste técnico realizado com .NET 8, PostgreSQL, Entity Framework Core no padrã
 ## Funcionalidades desenvolvidas
 CRUD completo implementando o padrão CQRS
 
-Produtos
-
-- CreateProductCommand
-- GetProductByIdQuery
-- GetAllProductsQuery
-- UpdateProductCommand
-- DeleteProductCommand
-
-Vendas
-- CreateSaleCommand
-- GetSaleByIdQuery
-- GetSalesByPeriodQuery
-- UpdateSaleCommand
-- DeleteSaleCommand
+- Produtos
+- Vendas
+- Usuários
 
 ## 🗂️ Estrutura de Projeto
 
