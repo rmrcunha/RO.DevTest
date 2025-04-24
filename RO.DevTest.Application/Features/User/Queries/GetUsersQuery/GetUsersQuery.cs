@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RO.DevTest.Application.Features.User.Queries;
+namespace RO.DevTest.Application.Features.User.Queries.GetUsersQuery;
 
 public record GetUsersQuery:IRequest<GetUsersQueryResult>
 {

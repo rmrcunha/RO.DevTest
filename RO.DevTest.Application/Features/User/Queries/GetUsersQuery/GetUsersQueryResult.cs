@@ -1,6 +1,6 @@
 ﻿using RO.DevTest.Application.Features.User.DTO;
 
-namespace RO.DevTest.Application.Features.User.Queries
+namespace RO.DevTest.Application.Features.User.Queries.GetUsersQuery
 {
     public class GetUsersQueryResult
     {
