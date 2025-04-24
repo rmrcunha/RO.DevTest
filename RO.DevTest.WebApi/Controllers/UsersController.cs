@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RO.DevTest.Application.Features.User.Commands.CreateUserCommand;
+using RO.DevTest.Application.Features.User.Commands.DeleteUserCommand;
 using RO.DevTest.Application.Features.User.Commands.UpdateUserCommand;
 using RO.DevTest.Application.Features.User.Queries.GetUserByIdQuery;
 using RO.DevTest.Application.Features.User.Queries.GetUsersQuery;
@@ -50,5 +51,15 @@ public class UsersController(IMediator mediator) : Controller {
         if (id != request.UserId) return BadRequest("User ID mismatch");
         var response = await _mediator.Send(request);
         return Ok(response);
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> DeleteUser(string id)
+    {
+        var request = new DeleteUserCommand(id);
+        await _mediator.Send(request);
+        return NoContent();
     }
 }
