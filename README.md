@@ -31,7 +31,7 @@ CRUD completo implementando o padrão CQRS
 
 ## Execução dos testes
 
-1. dotnet test
+	dotnet test
 
 Testes cobrem a maioria das funcionalidades implementadas, incluindo:
 - Validações de entrada
