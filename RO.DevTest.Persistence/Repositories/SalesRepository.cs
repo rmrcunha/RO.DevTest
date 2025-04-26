@@ -1,4 +1,5 @@
-﻿using RO.DevTest.Application.Contracts.Persistance.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using RO.DevTest.Application.Contracts.Persistance.Repositories;
 using RO.DevTest.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,15 @@ namespace RO.DevTest.Persistence.Repositories;
 
 public class SalesRepository(DefaultContext context) : BaseRepository<Sale>(context), ISalesRepository
 {
-    public Task<IEnumerable<Sale>> GetSalesByCustomerIdAsync(int customerId)
+    public async Task<List<Sale>> GetSalesByPeriodAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await Context.Sales
+            .Where(s => s.CreatedAt >= startDate && s.CreatedAt <= endDate)
+            .ToListAsync(cancellationToken);
     }
 
-    public Task<IEnumerable<Sale>> GetSalesByProductIdAsync(int productId)
+    public async Task<int> GetTotalSalesAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await Context.Sales.CountAsync(cancellationToken);
     }
 }

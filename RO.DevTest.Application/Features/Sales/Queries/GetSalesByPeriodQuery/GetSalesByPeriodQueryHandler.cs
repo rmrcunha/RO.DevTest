@@ -16,10 +16,9 @@ public class GetSalesByPeriodQueryHandler(ISalesRepository salesRepository, IPro
     {
         if(request.endDate < request.startDate) throw new ArgumentException("End date cannot be earlier than start date.");
 
-        var salesQuery = salesRepository.Query().Where(s => s.CreatedAt >= request.startDate && s.CreatedAt <= request.endDate);
+        var salesList = await salesRepository.GetSalesByPeriodAsync(request.startDate, request.endDate, cancellationToken);
 
-        var salesList = await salesQuery.ToListAsync(cancellationToken);
-        var totalCount = salesList.Count;
+        var totalCount = salesList.Count();
         var totalAmount = salesList.Sum(s => s.TotalPrice);
 
         var revenuePerProduct = salesList.GroupBy(s => s.ProductId)

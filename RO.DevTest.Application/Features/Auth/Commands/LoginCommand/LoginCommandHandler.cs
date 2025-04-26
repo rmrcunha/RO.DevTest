@@ -26,7 +26,8 @@ public class LoginCommandHandler(UserManager<Domain.Entities.User> userManager, 
         {
             UserId = user.Id.ToString(),
             Email = user.Email,
-            Roles = roles.ToList()
+            Roles = roles.ToList(),
+            Token = token
         };
     }
 }

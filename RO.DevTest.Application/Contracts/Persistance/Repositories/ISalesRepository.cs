@@ -9,6 +9,6 @@ namespace RO.DevTest.Application.Contracts.Persistance.Repositories;
 
 public interface ISalesRepository:IBaseRepository<Sale>
 {
-    Task<IEnumerable<Sale>> GetSalesByProductIdAsync(int productId);
-    Task<IEnumerable<Sale>> GetSalesByCustomerIdAsync(int customerId);
+    Task<List<Sale>> GetSalesByPeriodAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken);
+    Task<int> GetTotalSalesAsync(CancellationToken cancellationToken);
 }

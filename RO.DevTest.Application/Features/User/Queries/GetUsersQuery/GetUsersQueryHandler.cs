@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RO.DevTest.Application.Features.User.Queries.GetUsersQuery;
 
-public class GetUsersQueryHandler(UserManager<Domain.Entities.User> userManager):IRequestHandler<GetUsersQuery, GetUsersQueryResult>
+public class GetUsersQueryHandler(UserManager<Domain.Entities.User> userManager, bool test = false):IRequestHandler<GetUsersQuery, GetUsersQueryResult>
 {
     public async Task<GetUsersQueryResult> Handle(GetUsersQuery request, CancellationToken cancellationToken)
     {
@@ -29,26 +29,46 @@ public class GetUsersQueryHandler(UserManager<Domain.Entities.User> userManager)
             _ => query.OrderBy(u => u.UserName)
         };
 
-        var totalCount = await query.CountAsync(cancellationToken);
+        int totalCount;
+        List<UserDTO> items;
 
-        var items = await query
-            .Skip((request.PageNumber -1) * request.PageSize)
-            .Take(request.PageSize)
-            .Select(u => new UserDTO
-            {
-                Id = u.Id,
-                Name = u.UserName,
-                Email = u.Email,
-         
-            })
-            .ToListAsync(cancellationToken);
+        if (!test){
+            totalCount = await query.CountAsync(cancellationToken);
 
-        return new GetUsersQueryResult
+            items = await query
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(u => new UserDTO
+                {
+                    Id = u.Id,
+                    Name = u.Name,
+                    Email = u.Email,
+
+                })
+                .ToListAsync(cancellationToken);
+        }
+        else
         {
-            TotalCount = totalCount,
-            Users = items,
-            TotalPages = (int)Math.Ceiling(totalCount / (double)request.PageSize),
-        };
+            totalCount = query.Count();
+
+            items = query
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(u => new UserDTO
+                {
+                    Id = u.Id,
+                    Name = u.Name,
+                    Email = u.Email,
+                })
+                .ToList();
+        }
+
+            return new GetUsersQueryResult
+            {
+                TotalCount = totalCount,
+                Users = items,
+                TotalPages = (int)Math.Ceiling(totalCount / (double)request.PageSize),
+            };
     }
 
 }
