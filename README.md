@@ -5,6 +5,7 @@ Teste técnico realizado com .NET 8, PostgreSQL, Entity Framework Core no padrã
 ## Funcionalidades desenvolvidas
 CRUD completo implementando o padrão CQRS
 
+- Autenticação de usuários com JWT
 - Produtos
 - Vendas
 - Usuários
@@ -27,6 +28,17 @@ CRUD completo implementando o padrão CQRS
 - MediatR
 - Docker
 - Swagger
+
+## Execução dos testes
+
+1. dotnet test
+
+Testes cobrem a maioria das funcionalidades implementadas, incluindo:
+- Validações de entrada
+- Repositórios
+- Handlers
+- Exceções
+- Autenticação
 
 ## Como executar o projeto
 
