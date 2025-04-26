@@ -27,6 +27,7 @@ public class CreateSaleCommandHandler(ISalesRepository salesRepository, IProduct
         var newSale = new Sale();
 
         newSale.ProductId = request.ProductId;
+        newSale.Product = product;
         newSale.Quantity = request.Quantity;
         newSale.TotalPrice = totalPrice;
         newSale.CreatedAt = DateTime.UtcNow;

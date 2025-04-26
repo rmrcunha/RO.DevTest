@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using RO.DevTest.Application.Features.Product.Queries.GetProductByIdQuery;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +12,12 @@ public record CreateSaleCommand:IRequest<CreateSaleResult>
 {
     public string ProductId { get; set; } = string.Empty;
     public int Quantity { get; set; } = 0;
-    public double TotalPrice { get; set; } = 0.0;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public Domain.Entities.Sale AssignTo()
     {
         return new Domain.Entities.Sale
         {
             ProductId = ProductId,
             Quantity = Quantity,
-            TotalPrice = TotalPrice,
-            CreatedAt = CreatedAt.ToUniversalTime(),
         };
     }
 }

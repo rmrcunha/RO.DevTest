@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using RO.DevTest.Application.Features.Product.Queries.GetProductsQuery;
 using RO.DevTest.Application.Features.Sales.Commands.CreateSaleCommand;
 using RO.DevTest.Application.Features.Sales.Commands.DeleteSaleCommand;
 using RO.DevTest.Application.Features.Sales.Commands.UpdateSaleCommand;
 using RO.DevTest.Application.Features.Sales.Queries.GetSaleByIdQuery;
 using RO.DevTest.Application.Features.Sales.Queries.GetSalesByPeriodQuery;
+using RO.DevTest.Application.Features.Sales.Queries.GetSalesQuery;
 
 namespace RO.DevTest.WebApi.Controllers;
 [ApiController]
@@ -32,6 +34,15 @@ public class SalesController(IMediator mediator):Controller
     {
         var result = await _mediator.Send(new GetSalesByPeriodQuery(startDate,endDate));
         return Ok(result);
+    }
+
+    [HttpGet("paginated")]
+    [ProducesResponseType(typeof(GetProductsQueryResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetProductsQueryResult), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetPaginatedSales([FromQuery] GetSalesQuery query)
+    {
+        var response = await _mediator.Send(query);
+        return Ok(response);
     }
 
     [HttpGet("{id}")]
