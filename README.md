@@ -59,13 +59,20 @@ Testes cobrem a maioria das funcionalidades implementadas, incluindo:
 3. **Iniciar o Docker**
 	- Criar o banco de dados PostgreSQL
 	
-	```docker-compose up -d```
+	```
+	docker-compose up -d
+	 ```
 
 4. **Aplicar migrations**
-	``` dotnet ef database update --project RO.DevTest.Persistence```
+
+	``` 
+	dotnet ef database update --project RO.DevTest.Persistence
+	```
 
 5. **Executar o projeto**
-	``` dotnet run --project RO.DevTest.WebApi```
+	``` 
+	dotnet run --project RO.DevTest.WebApi
+	```
 
 6. **Acessar a API**
 	- Acesse `http://localhost:7014/swagger` para visualizar a documentação da API gerada pelo Swagger.
