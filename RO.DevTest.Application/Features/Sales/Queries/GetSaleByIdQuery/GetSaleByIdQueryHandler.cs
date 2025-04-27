@@ -8,7 +8,7 @@ using MediatR;
 
 namespace RO.DevTest.Application.Features.Sales.Queries.GetSaleByIdQuery;
 
-public class GetSaleByQueryHandler(ISalesRepository salesRepository): IRequestHandler<GetSaleByIdQuery, GetSaleByIdResult>
+public class GetSaleByIdQueryHandler(ISalesRepository salesRepository): IRequestHandler<GetSaleByIdQuery, GetSaleByIdResult>
 {
     public async Task<GetSaleByIdResult> Handle(GetSaleByIdQuery request, CancellationToken cancellationToken)
     {

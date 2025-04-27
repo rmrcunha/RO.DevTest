@@ -11,21 +11,40 @@ using System.Threading.Tasks;
 
 namespace RO.DevTest.Application.Features.Sales.Queries.GetSalesQuery;
 
-public class GetSalesQueryHandler(ISalesRepository salesRepository): IRequestHandler<GetSalesQuery, GetSalesResult>
+public class GetSalesQueryHandler(ISalesRepository salesRepository, bool test = false) : IRequestHandler<GetSalesQuery, GetSalesResult>
 {
     public async Task<GetSalesResult> Handle(GetSalesQuery request, CancellationToken cancellationToken)
     {
+        
+
         var query = salesRepository.Query();
         if(request.SortBy?.ToLower() == "quantity") query = request.SortDescending ? query.OrderByDescending(x => x.Quantity) : query.OrderBy(x => x.Quantity);
         else if (request.SortBy?.ToLower() == "price") query = request.SortDescending ? query.OrderByDescending(x => x.TotalPrice) : query.OrderBy(x => x.TotalPrice);
         else if (request.SortBy?.ToLower() == "date") query = request.SortDescending ? query.OrderByDescending(x => x.CreatedAt) : query.OrderBy(x => x.CreatedAt);
 
-        var totalCount = await query.CountAsync(cancellationToken);
 
-        var items = await query
-            .Skip((request.Page - 1) * request.PageSize)
-            .Take(request.PageSize)
-            .ToListAsync(cancellationToken);
+        int totalCount;
+        List<Domain.Entities.Sale> items;
+
+        if (!test)
+        {
+            totalCount = await query.CountAsync(cancellationToken);
+            items = await query
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync(cancellationToken);
+        }
+        else 
+        {
+            totalCount = query.Count(); 
+            items = query
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToList();
+        }
+
+
+
 
         return new GetSalesResult
         {

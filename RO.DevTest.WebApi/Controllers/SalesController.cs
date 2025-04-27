@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
@@ -30,6 +31,7 @@ public class SalesController(IMediator mediator):Controller
     [HttpGet("analytics")]
     [ProducesResponseType(typeof(GetSalesByPeriodResult), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(GetSalesByPeriodResult), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> GetSalesByPeriod([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
     {
         var result = await _mediator.Send(new GetSalesByPeriodQuery(startDate,endDate));
@@ -39,6 +41,7 @@ public class SalesController(IMediator mediator):Controller
     [HttpGet("paginated")]
     [ProducesResponseType(typeof(GetProductsQueryResult), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(GetProductsQueryResult), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> GetPaginatedSales([FromQuery] GetSalesQuery query)
     {
         var response = await _mediator.Send(query);
@@ -48,6 +51,7 @@ public class SalesController(IMediator mediator):Controller
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(GetSaleByIdResult), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(GetSaleByIdResult), StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> GetSaleById([FromRoute] string id)
     {
         var result = await _mediator.Send(new GetSaleByIdQuery(id));
@@ -58,6 +62,7 @@ public class SalesController(IMediator mediator):Controller
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(CreateSaleResult), StatusCodes.Status202Accepted)]
     [ProducesResponseType(typeof(CreateSaleResult), StatusCodes.Status400BadRequest)]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> UpdateSale([FromForm] UpdateSaleCommand sale, string id)
     {
         if (id != sale.Id) return BadRequest("ID URL does not match ID from the sale");
@@ -70,6 +75,7 @@ public class SalesController(IMediator mediator):Controller
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(bool), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(bool), StatusCodes.Status404NotFound)]
+    [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> DeleteSale(string id)
     {
         var result = await _mediator.Send(new DeleteSaleCommand(id));

@@ -7,4 +7,7 @@ using System.Threading.Tasks;
 
 namespace RO.DevTest.Application.Contracts.Persistance.Repositories;
 
-public interface IProductsRepository : IBaseRepository<Product> { }
+public interface IProductsRepository : IBaseRepository<Product>
+{
+    Task<int> GetTotalProductsAsync(CancellationToken cancellationToken);
+}

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RO.DevTest.Application.Features.Product.Queries.GetProductsQuery;
 
-public class GetProductQueryHandler(IProductsRepository productsRepository) : IRequestHandler<GetProductsQuery, GetProductsQueryResult>
+public class GetProductQueryHandler(IProductsRepository productsRepository, bool test = false) : IRequestHandler<GetProductsQuery, GetProductsQueryResult>
 {
 
     public async Task<GetProductsQueryResult> Handle(GetProductsQuery request, CancellationToken cancellationToken)
@@ -24,10 +24,16 @@ public class GetProductQueryHandler(IProductsRepository productsRepository) : IR
         else if ((request.SortBy?.ToLower() == "name")) query = request.IsAscending ? query.OrderBy(x => x.Name) : query.OrderByDescending(x => x.Name);
 
         var totalCount = query.Count();
-        var items = await query
-            .Skip((request.Page - 1) * request.PageSize)
-            .Take(request.PageSize)
-            .ToListAsync(cancellationToken);
+
+        List<Domain.Entities.Product> items;
+
+        if (test) items = query.Skip((request.Page - 1) * request.PageSize)
+                        .Take(request.PageSize)
+                        .ToList();
+       
+        else items = await query.Skip((request.Page - 1) * request.PageSize)
+                        .Take(request.PageSize)
+                        .ToListAsync(cancellationToken);
 
         return new GetProductsQueryResult
         {

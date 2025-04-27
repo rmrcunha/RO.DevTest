@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using OpenQA.Selenium;
 using RO.DevTest.Application.Contracts.Persistance.Repositories;
 using RO.DevTest.Domain.Exception;
 using System;
@@ -19,7 +20,7 @@ public class UpdateSaleCommandHandler(ISalesRepository salesRepository) : IReque
         if(!validationResult.IsValid) throw new BadRequestException(validationResult);
 
         var sale = await salesRepository.GetByIdAsync(request.Id, cancellationToken);
-        if (sale == null) throw new Exception($"Sale with id {request.Id} not found");
+        if (sale == null) throw new NotFoundException($"Sale with id {request.Id} not found");
 
         sale.ProductId = request.ProductId;
         sale.Quantity = request.Quantity;

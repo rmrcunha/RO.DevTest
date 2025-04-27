@@ -4,6 +4,7 @@ using RO.DevTest.Application;
 using RO.DevTest.Application.Contracts.Persistance.Repositories;
 using RO.DevTest.Domain.Entities;
 using RO.DevTest.Domain.Enums;
+using RO.DevTest.Domain.Exception.Middleware;
 using RO.DevTest.Infrastructure.IoC;
 using RO.DevTest.Persistence;
 using RO.DevTest.Persistence.IoC;
@@ -21,6 +22,38 @@ public class Program {
         builder.Services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<DefaultContext>()
             .AddDefaultTokenProviders();
+
+        builder.Services.AddControllers();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new() { Title = "RO.DevTest", Version = "v1" });
+
+            c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                Description = "Digite 'Bearer {seu token JWT}'"
+            });
+
+            c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+            {
+                {
+                    new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                    {
+                        Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                        {
+                            Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
+        });
+
 
         builder.Services.AddIdentityCore<User>(options =>
         {
@@ -77,6 +110,8 @@ public class Program {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseMiddleware<ExceptionMiddleware>();
 
         app.UseHttpsRedirection();
 

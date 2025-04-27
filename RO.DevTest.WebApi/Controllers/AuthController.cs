@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
 using RO.DevTest.Application.Features.Auth.Commands.LoginCommand;
@@ -15,6 +16,7 @@ public class AuthController(IMediator mediator) : Controller {
     [HttpPost("register")]
     [ProducesResponseType(typeof(RegisterResult), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(RegisterResult), StatusCodes.Status400BadRequest)]
+    [AllowAnonymous]
     public async Task<IActionResult> Register(RegisterCommand registerCommand)
     {
         var res = await _mediator.Send(registerCommand);
@@ -25,6 +27,7 @@ public class AuthController(IMediator mediator) : Controller {
     [HttpPost("login")]
     [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status400BadRequest)]
+    [AllowAnonymous]
     public async Task<IActionResult> Login(LoginCommand loginCommand)
     {
         var res = await _mediator.Send(loginCommand);
